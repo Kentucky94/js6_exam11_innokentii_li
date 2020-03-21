@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {fetchCategories} from "../../store/actions/categoriesActons";
+import {fetchCategories, fetchCategory} from "../../store/actions/categoriesActons";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {NavLink as RouterNavLink} from 'react-router-dom';
 import {connect} from "react-redux";
 import {fetchAllItems, fetchItemsByCategory} from "../../store/actions/itemsActions";
 import ItemBlock from "../../components/ItemBlock/ItemBlock";
+import './ItemsMainPage.css';
 
 class ItemsMainPage extends Component {
   async componentDidMount() {
@@ -13,8 +14,8 @@ class ItemsMainPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(this.props.match.params.id !== prevProps.match.params.id){
-      this.props.fetchItemsByCategory(this.props.match.params.id);
+    if(this.props.currentCategory.name !== prevProps.currentCategory.name){
+      this.props.fetchItemsByCategory(this.props.currentCategory._id);
     }
   }
 
@@ -25,7 +26,7 @@ class ItemsMainPage extends Component {
   render() {
     const categories = this.props.categories.map(category =>
       <ListGroupItem
-      key={category._id} tag={RouterNavLink} to={'/items/byCategory/' + category._id}
+        key={category._id} onClick={() => this.props.fetchCategory(category._id)}
       >
         {category.name}
       </ListGroupItem>
@@ -63,11 +64,13 @@ class ItemsMainPage extends Component {
 
 const mapStateToProps = state => ({
   categories: state.categories.categories,
+  currentCategory: state.categories.currentCategory,
   items: state.items.items,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCategories: () => dispatch(fetchCategories()),
+  fetchCategory: categoryId => dispatch(fetchCategory(categoryId)),
   fetchAllItems: () => dispatch(fetchAllItems()),
   fetchItemsByCategory: categoryId => dispatch(fetchItemsByCategory(categoryId))
 });

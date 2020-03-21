@@ -14,5 +14,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:categoryId', async (req, res) => {
+  try{
+    const category = await Category.findOne({_id: req.params.categoryId});
+
+    res.send(category);
+  }catch(error){
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;
 

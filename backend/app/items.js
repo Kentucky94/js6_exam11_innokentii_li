@@ -74,7 +74,7 @@ router.get('/:itemId', async (req, res) => {
   }
 });
 
-router.get('/:categoryId', async (req, res) => {
+router.get('/byCategory/:categoryId', async (req, res) => {
   try{
     const items = await Item.find({category: req.params.categoryId});
 

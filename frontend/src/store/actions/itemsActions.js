@@ -33,7 +33,7 @@ export const fetchItemById = itemId => {
 
 export const fetchItemsByCategory = categoryId => {
   return async dispatch => {
-    const response = await axiosOrders.get('/items/' + categoryId);
+    const response = await axiosOrders.get('/items/byCategory/' + categoryId);
 
     response.data.reverse();
 

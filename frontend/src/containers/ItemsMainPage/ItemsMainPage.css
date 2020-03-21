@@ -1,0 +1,12 @@
+.ItemsMainPage{
+  display: flex;
+  justify-content: space-between;
+}
+
+.MainPageLeft{
+  width: 30%;
+}
+
+.MainPageRight{
+  width: 70%;
+}
