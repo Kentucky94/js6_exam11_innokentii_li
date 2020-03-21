@@ -46,7 +46,7 @@ router.delete('/:itemId', auth, async (req, res) => {
 
     if(!item || user._id.toString() !== item.user.toString()) return res.status(403).send({error: 'This item does not belong to current user!'});
 
-    await Item.remove({_id: req.params.itemId});
+    await Item.deleteOne({_id: req.params.itemId});
 
     res.send({message: 'Item deleted'})
   }catch(error){

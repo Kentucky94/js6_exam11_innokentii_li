@@ -7,6 +7,7 @@ import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
 import ItemsMainPage from "./containers/ItemsMainPage/ItemsMainPage";
 import AddItemPage from "./containers/AddItemPage/AddItemPage";
+import FullItemPage from "./containers/FullItemPage";
 
 const App = () => {
   return (
@@ -16,8 +17,8 @@ const App = () => {
           <Route path='/register' exact component={Register}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/items/add' exact component={AddItemPage} />
+          <Route path='/items/:id' exact component={FullItemPage} />
           <Route path='/' component={ItemsMainPage} />
-          <Route path='/items/:id' component={ItemsMainPage} />
         </Switch>
       </div>
     </Layout>

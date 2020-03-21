@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {fetchItemById} from "../store/actions/itemsActions";
+import {deleteItem, fetchItemById} from "../store/actions/itemsActions";
 import {connect} from "react-redux";
 
 class FullItemPage extends Component {
@@ -10,11 +10,13 @@ class FullItemPage extends Component {
   render() {
     return (
       <div>
-        "title": "Guitar",
-        "description": "Electric guitar",
-        "price": 500,
-        "category": "5e75cd12e3f2ec5e2a6620b6",
-        "image": "JlG9z11mOQmaAwdL_2uUZ.jpg",
+        <img style={{'width': '300px'}} src={'http://localhost:8080/uploads/' + this.props.item.image} alt="itemimg"/>
+        <h3><b>Title: </b>{this.props.item.title}</h3>
+        <h3><b>Description: </b>{this.props.item.description}</h3>
+        <h3><b>Price: </b>{this.props.item.price}</h3>
+        <button onClick={() => this.props.deleteItem(this.props.item._id)}>
+          Delete item
+        </button>
       </div>
     );
   }
@@ -25,7 +27,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchItem: itemId => dispatch(fetchItemById(itemId))
+  fetchItem: itemId => dispatch(fetchItemById(itemId)),
+  deleteItem: itemId => dispatch(deleteItem(itemId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FullItemPage);

@@ -18,10 +18,14 @@ class ItemsMainPage extends Component {
     }
   }
 
+  toFullPage = itemId => {
+    this.props.history.push('/items/' + itemId);
+  };
+
   render() {
     const categories = this.props.categories.map(category =>
       <ListGroupItem
-      key={category._id} tag={RouterNavLink} to={'/items/' + category._id}
+      key={category._id} tag={RouterNavLink} to={'/items/byCategory/' + category._id}
       >
         {category.name}
       </ListGroupItem>
@@ -34,6 +38,7 @@ class ItemsMainPage extends Component {
         title={item.title}
         image={item.image}
         price={item.price}
+        onClick={() => this.toFullPage(item._id)}
       />
     );
 
