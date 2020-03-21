@@ -1,14 +1,13 @@
 import React from 'react';
-import {NavbarText, NavItem, NavLink} from "reactstrap";
-import {NavLink as RouterNavLink} from "react-router-dom";
+import {NavbarText} from "reactstrap";
 
 const UserNav = props => {
   return (
     <>
-      <NavbarText>
-        {'Hello, ' + props.user.username + '!'}
+      <NavbarText className="mr-2">
+        {'Hello, ' + props.user.displayName + '!'}
       </NavbarText>
-      <NavbarText onClick={props.onClick}>
+      <NavbarText className="btn btn-danger" onClick={props.onClick}>
         Logout
       </NavbarText>
     </>

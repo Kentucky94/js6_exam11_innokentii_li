@@ -20,20 +20,32 @@ class Login extends Component {
     this.props.loginUser({...this.state});
   };
 
+  getFieldError = fieldName => {
+    try{
+      return this.props.error.errors[fieldName].message;
+    }catch(error){
+      return undefined;
+    }
+  };
+
   render() {
     return (
       <>
         <h2>Login</h2>
         <Form onSubmit={this.onSubmitHandler}>
           <FormElement
+            error={this.getFieldError('username')}
             propertyName="username"
+            title="Username"
             type="text"
             value={this.state.username}
             onChange={this.inputChangeHandler}
             required
           />
           <FormElement
+            error={this.getFieldError('password')}
             propertyName="password"
+            title="Password"
             type="password"
             value={this.state.password}
             onChange={this.inputChangeHandler}
@@ -53,7 +65,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user
+  user: state.users.user,
+  error: state.users.loginError,
 });
 
 const mapDispatchToProps = dispatch => ({

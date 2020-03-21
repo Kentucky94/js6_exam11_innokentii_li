@@ -8,6 +8,8 @@ class Register extends Component {
   state = {
     username: '',
     password: '',
+    displayName: '',
+    phoneNumber: '',
   };
 
   inputChangeHandler = event => {
@@ -20,6 +22,14 @@ class Register extends Component {
     this.props.registerUser({...this.state});
   };
 
+  getFieldError = fieldName => {
+    try{
+      return this.props.error.errors[fieldName].message;
+    }catch(error){
+      return undefined;
+    }
+  };
+
   render() {
     return (
       <>
@@ -27,16 +37,38 @@ class Register extends Component {
         <Form onSubmit={this.onSubmitHandler}>
           <FormElement
             propertyName="username"
+            title="Username"
             type="text"
             value={this.state.username}
             onChange={this.inputChangeHandler}
+            error={this.getFieldError('username')}
             required
           />
           <FormElement
             propertyName="password"
+            title="Password"
             type="password"
             value={this.state.password}
             onChange={this.inputChangeHandler}
+            error={this.getFieldError('password')}
+            required
+          />
+          <FormElement
+            propertyName="displayName"
+            title="Display Name"
+            type="text"
+            value={this.state.displayName}
+            onChange={this.inputChangeHandler}
+            error={this.getFieldError('displayName')}
+            required
+          />
+          <FormElement
+            propertyName="phoneNumber"
+            title="Phone Number"
+            type="text"
+            value={this.state.phoneNumber}
+            onChange={this.inputChangeHandler}
+            error={this.getFieldError('phoneNumber')}
             required
           />
           <FormGroup row>
@@ -52,8 +84,12 @@ class Register extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  error: state.users.registerError,
+});
+
 const mapDispatchToProps = dispatch => ({
   registerUser: userData => dispatch(registerUser(userData)),
 });
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

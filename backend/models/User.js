@@ -25,6 +25,14 @@ const UserSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
+  },
+  displayName: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
   }
 });
 

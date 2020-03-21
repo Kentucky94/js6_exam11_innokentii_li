@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink as RouterNavLink} from 'react-router-dom';
-import {Nav, Navbar, NavbarBrand, NavbarText, NavItem, NavLink} from "reactstrap";
+import {Nav, Navbar, NavbarBrand} from "reactstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../../store/actions/usersActions";
 import UserNav from "../UI/UserNav";
@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className="Header">
       <Navbar color="light" light expand="md">
-        <NavbarBrand tag={RouterNavLink} to="/" className='mr-auto'>Forum App</NavbarBrand>
+        <NavbarBrand tag={RouterNavLink} to="/" className='mr-auto'>Flea Market</NavbarBrand>
         <Nav className="ml-auto" navbar>
 
           {user ? <UserNav user={user} onClick={() => dispatch(logoutUser())}/> : <AnonymousNav />}

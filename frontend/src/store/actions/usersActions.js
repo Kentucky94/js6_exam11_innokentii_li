@@ -9,9 +9,9 @@ export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
 
 export const registerUserSuccess = () => ({type: REGISTER_USER_SUCCESS});
-export const registerUserFailure = error => ({type: REGISTER_USER_SUCCESS, error});
+export const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, error});
 export const loginUserSuccess = user => ({type: LOGIN_USER_SUCCESS, user});
-export const loginUserFailure = error => ({type: LOGIN_USER_SUCCESS, error});
+export const loginUserFailure = error => ({type: LOGIN_USER_FAILURE, error});
 export const logoutUserSuccess = () => ({type: LOGOUT_USER_SUCCESS});
 export const logoutUserFailure = error => ({type: LOGOUT_USER_FAILURE, error});
 
@@ -23,7 +23,11 @@ export const registerUser = userData => {
       dispatch(registerUserSuccess());
       dispatch(push('/'));
     }catch(error){
-      dispatch(registerUserFailure(error))
+      if (error.response) {
+        dispatch(registerUserFailure(error.response.data));
+      } else {
+        dispatch(registerUserFailure({global: 'Network error or no internet'}));
+      }
     }
   }
 };
@@ -36,7 +40,11 @@ export const loginUser = loginData => {
       dispatch(loginUserSuccess(response.data));
       dispatch(push('/'))
     }catch(error){
-      dispatch(loginUserFailure(error))
+      if (error.response) {
+        dispatch(loginUserFailure(error.response.data));
+      } else {
+        dispatch(loginUserFailure({global: 'Network error or no internet'}));
+      }
     }
   }
 };
