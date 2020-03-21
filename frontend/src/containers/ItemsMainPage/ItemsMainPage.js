@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {fetchCategories, fetchCategory} from "../../store/actions/categoriesActons";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {NavLink as RouterNavLink} from 'react-router-dom';
 import {connect} from "react-redux";
 import {fetchAllItems, fetchItemsByCategory} from "../../store/actions/itemsActions";
 import ItemBlock from "../../components/ItemBlock/ItemBlock";
@@ -13,9 +12,9 @@ class ItemsMainPage extends Component {
     await this.props.fetchAllItems();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if(this.props.currentCategory.name !== prevProps.currentCategory.name){
-      this.props.fetchItemsByCategory(this.props.currentCategory._id);
+      await this.props.fetchItemsByCategory(this.props.currentCategory._id);
     }
   }
 
@@ -48,7 +47,7 @@ class ItemsMainPage extends Component {
         <div className='MainPageLeft'>
           <h2>Categories</h2>
           <ListGroup>
-            <ListGroupItem tag={RouterNavLink} to='/' exact>
+            <ListGroupItem>
               All Items
             </ListGroupItem>
             {categories}

@@ -24,5 +24,13 @@ router.get('/:categoryId', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const data = req.body;
+
+  const category = new Category(data);
+
+  await category.save();
+});
+
 module.exports = router;
 

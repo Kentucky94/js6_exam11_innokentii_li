@@ -14,7 +14,7 @@ class FullItemPage extends Component {
         <h3><b>Title: </b>{this.props.item.title}</h3>
         <h3><b>Description: </b>{this.props.item.description}</h3>
         <h3><b>Price: </b>{this.props.item.price}</h3>
-        <button onClick={() => this.props.deleteItem(this.props.item._id)}>
+        <button style={{'display': !!this.props.user ? 'block' : 'none'}} onClick={() => this.props.deleteItem(this.props.item._id)}>
           Delete item
         </button>
       </div>
@@ -24,6 +24,7 @@ class FullItemPage extends Component {
 
 const mapStateToProps = state => ({
   item: state.items.currentItem,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = dispatch => ({
