@@ -3,20 +3,39 @@ import {fetchCategories} from "../../store/actions/categoriesActons";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {NavLink as RouterNavLink} from 'react-router-dom';
 import {connect} from "react-redux";
+import {fetchAllItems, fetchItemsByCategory} from "../../store/actions/itemsActions";
+import ItemBlock from "../../components/ItemBlock/ItemBlock";
 
 class ItemsMainPage extends Component {
   async componentDidMount() {
     await this.props.fetchCategories();
+    await this.props.fetchAllItems();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.match.params.id !== prevProps.match.params.id){
+      this.props.fetchItemsByCategory(this.props.match.params.id);
+    }
   }
 
   render() {
     const categories = this.props.categories.map(category =>
       <ListGroupItem
-      tag={RouterNavLink} to={'/items/' + category._id}
+      key={category._id} tag={RouterNavLink} to={'/items/' + category._id}
       >
         {category.name}
       </ListGroupItem>
-  );
+    );
+
+    const items = this.props.items.map(item =>
+      <ItemBlock
+        key={item._id}
+        id={item._id}
+        title={item.title}
+        image={item.image}
+        price={item.price}
+      />
+    );
 
     return (
       <div className="ItemsMainPage">
@@ -30,7 +49,7 @@ class ItemsMainPage extends Component {
           </ListGroup>
         </div>
         <div className='MainPageRight'>
-
+          {items}
         </div>
       </div>
     );
@@ -39,10 +58,13 @@ class ItemsMainPage extends Component {
 
 const mapStateToProps = state => ({
   categories: state.categories.categories,
+  items: state.items.items,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategories: () => dispatch(fetchCategories())
+  fetchCategories: () => dispatch(fetchCategories()),
+  fetchAllItems: () => dispatch(fetchAllItems()),
+  fetchItemsByCategory: categoryId => dispatch(fetchItemsByCategory(categoryId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemsMainPage);

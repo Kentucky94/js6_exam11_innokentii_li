@@ -6,16 +6,18 @@ import Layout from "./components/Layout/Layout";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
 import ItemsMainPage from "./containers/ItemsMainPage/ItemsMainPage";
+import AddItemPage from "./containers/AddItemPage/AddItemPage";
 
 const App = () => {
   return (
     <Layout>
       <div className="App">
         <Switch>
-
           <Route path='/register' exact component={Register}/>
           <Route path='/login' exact component={Login}/>
+          <Route path='/items/add' exact component={AddItemPage} />
           <Route path='/' component={ItemsMainPage} />
+          <Route path='/items/:id' component={ItemsMainPage} />
         </Switch>
       </div>
     </Layout>

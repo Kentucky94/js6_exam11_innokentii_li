@@ -22,15 +22,11 @@ const upload = multer({storage});
 
 router.post('/', [auth, upload.single('image')], async (req, res) => {
   try{
-    const user = req.user;
-
     const itemData = req.body;
 
     if(req.file){
       itemData.image = req.file.filename;
     }
-
-    itemData.user = user._id;
 
     const item = new Item(itemData);
 
@@ -63,6 +59,16 @@ router.get('/', async (req, res) => {
     const items = await Item.find();
 
     res.send(items)
+  }catch(error){
+    res.status(400).send(error);
+  }
+});
+
+router.get('/:itemId', async (req, res) => {
+  try{
+    const item = await Item.findOne({_id: req.params.itemId});
+
+    res.send(item);
   }catch(error){
     res.status(400).send(error);
   }
